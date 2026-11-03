@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Tellal: WhatsApp messages from Google Sheets</title>
-<meta name="description" content="Send WhatsApp template messages to every row of a Google Sheet through the official WhatsApp Cloud API, from your own number. No middleman subscription, no ban risk from WhatsApp Web bots.">
+<title>Tellal: SMS and WhatsApp from Google Sheets</title>
+<meta name="description" content="Send personalised SMS (Netgsm, İleti Merkezi) and WhatsApp template messages to every row of a Google Sheet, from your own account. No middleman subscription.">
 <link rel="icon" href="logo.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -30,12 +30,12 @@
   <div class="wrap">
     <div>
       <h1>
-        <span data-l="tr">Tablondaki her satıra, kendi numarandan WhatsApp mesajı.</span>
-        <span data-l="en">A WhatsApp message to every row of your sheet, from your own number.</span>
+        <span data-l="tr">Tablondaki her satıra kişiye özel SMS ya da WhatsApp.</span>
+        <span data-l="en">A personal SMS or WhatsApp message to every row of your sheet.</span>
       </h1>
       <p class="lead">
-        <span data-l="tr">Google E-Tablolar için eklenti. Resmi WhatsApp Cloud API ile çalışır: numaran yasaklanma riskine girmez, araya aylık abonelikli bir aracı girmez.</span>
-        <span data-l="en">An add-on for Google Sheets. It uses the official WhatsApp Cloud API, so your number isn't at risk of a ban and no middleman charges you a monthly fee.</span>
+        <span data-l="tr">Google E-Tablolar için eklenti. SMS'i kendi Netgsm ya da İleti Merkezi hesabından ve başlığınla, WhatsApp'ı resmi Cloud API ile kendi numarandan gönderir. Araya aylık abonelikli bir aracı girmez.</span>
+        <span data-l="en">An add-on for Google Sheets. It sends SMS through your own Netgsm or İleti Merkezi account and sender name, and WhatsApp through the official Cloud API from your own number. No middleman charges you a monthly fee.</span>
       </p>
       <div class="ctas">
         <a class="btn primary" data-install href="#"><span data-l="tr">E-Tablolar'a ekle, ücretsiz</span><span data-l="en">Add to Google Sheets, free</span></a>
@@ -61,8 +61,8 @@
         </tbody>
       </table>
       <div class="bubble">
-        <span data-l="tr">Merhaba Ayşe, #1042 numaralı siparişin kargoya verildi. Takip için butona dokun.</span>
-        <span data-l="en">Hi Ayşe, order #1042 has shipped. Tap the button to track it.</span>
+        <span data-l="tr">Merhaba Ayşe, #1042 numaralı siparişin kargoya verildi. Tahmini teslim: 6 Kasım.</span>
+        <span data-l="en">Hi Ayşe, order #1042 has shipped. Estimated delivery: Nov 6.</span>
         <small>14:02 ✓✓</small>
       </div>
     </div>
@@ -73,17 +73,17 @@
   <div class="wrap">
     <h2><span data-l="tr">Üç adımda gönderim</span><span data-l="en">Sending in three steps</span></h2>
     <p class="intro">
-      <span data-l="tr">Müşteri listen zaten bir tabloda. Tellal o tabloyu kişiye özel WhatsApp mesajlarına çevirir ve sonucu her satırın yanına yazar.</span>
-      <span data-l="en">Your customer list already lives in a sheet. Tellal turns it into personal WhatsApp messages and writes the result next to each row.</span>
+      <span data-l="tr">Müşteri listen zaten bir tabloda. Tellal o tabloyu kişiye özel SMS ya da WhatsApp mesajlarına çevirir ve sonucu her satırın yanına yazar.</span>
+      <span data-l="en">Your customer list already lives in a sheet. Tellal turns it into personal SMS or WhatsApp messages and writes the result next to each row.</span>
     </p>
     <ol class="steps">
       <li>
-        <h3><span data-l="tr">Numaranı bağla</span><span data-l="en">Connect your number</span></h3>
-        <p><span data-l="tr">"Facebook ile bağlan" düğmesi işletmeni ve numaranı Meta'nın resmi kurulum penceresinde seçtirir. İki dakika sürer, token kopyalamazsın.</span><span data-l="en">"Connect with Facebook" opens Meta's official setup window, where you pick your business and number. It takes two minutes and there is no token to copy.</span></p>
+        <h3><span data-l="tr">Hesabını bağla</span><span data-l="en">Connect your account</span></h3>
+        <p><span data-l="tr">SMS için Netgsm ya da İleti Merkezi API bilgilerini gir; onaylı başlıkların kendiliğinden listelenir. WhatsApp için numaranın erişim anahtarını yapıştır. Bir kez yapılır.</span><span data-l="en">For SMS, enter your Netgsm or İleti Merkezi API details; your approved sender names are listed automatically. For WhatsApp, paste your number's access token. You do this once.</span></p>
       </li>
       <li>
-        <h3><span data-l="tr">Şablonu sütunlara eşle</span><span data-l="en">Map the template to columns</span></h3>
-        <p><span data-l="tr">Onaylı şablonlarını listeler. {{1}} için "Ad", {{2}} için "Sipariş" sütununu seç; görsel, belge ve buton bağlantısı da sütundan gelebilir.</span><span data-l="en">Your approved templates are listed. Pick the "Name" column for {{1}} and "Order" for {{2}}. Images, documents and button links can come from columns too.</span></p>
+        <h3><span data-l="tr">Mesajı yaz</span><span data-l="en">Write the message</span></h3>
+        <p><span data-l="tr">SMS'te {{Ad}}, {{Sipariş}} gibi sütunları metne ekle; karakter ve SMS sayısını anında gör. WhatsApp'ta onaylı şablonunun değişkenlerini sütunlara eşle.</span><span data-l="en">For SMS, drop columns like {{Name}} and {{Order}} into the text and see the character and part count live. For WhatsApp, map your approved template's variables to columns.</span></p>
       </li>
       <li>
         <h3><span data-l="tr">Önizle, dene, gönder</span><span data-l="en">Preview, test, send</span></h3>
@@ -97,8 +97,8 @@
   <div class="wrap">
     <h2><span data-l="tr">Neden Tellal</span><span data-l="en">Why Tellal</span></h2>
     <p class="intro">
-      <span data-l="tr">E-Tablolar'dan WhatsApp göndermenin bugün iki yaygın yolu var. İkisinin de bir bedeli var.</span>
-      <span data-l="en">There are two common ways to send WhatsApp from Sheets today. Both come at a cost.</span>
+      <span data-l="tr">E-Tablolar'dan mesaj göndermenin bugün iki yaygın yolu var. İkisinin de bir bedeli var.</span>
+      <span data-l="en">There are two common ways to send messages from Sheets today. Both come at a cost.</span>
     </p>
     <div class="table-scroll">
     <table class="compare">
@@ -136,6 +136,12 @@
           <td class="us yes"><span data-l="tr">Hayır</span><span data-l="en">No</span></td>
         </tr>
         <tr>
+          <th><span data-l="tr">Netgsm, İleti Merkezi ile SMS</span><span data-l="en">SMS via Netgsm, İleti Merkezi</span></th>
+          <td class="no"><span data-l="tr">Hayır</span><span data-l="en">No</span></td>
+          <td class="no"><span data-l="tr">Hayır; Twilio gibi yabancı sağlayıcılar</span><span data-l="en">No; foreign gateways such as Twilio</span></td>
+          <td class="us yes"><span data-l="tr">Evet, kendi hesabın ve başlığınla</span><span data-l="en">Yes, your own account and sender name</span></td>
+        </tr>
+        <tr>
           <th><span data-l="tr">Türkçe arayüz</span><span data-l="en">Turkish interface</span></th>
           <td><span data-l="tr">Nadiren</span><span data-l="en">Rarely</span></td>
           <td><span data-l="tr">Nadiren</span><span data-l="en">Rarely</span></td>
@@ -151,8 +157,8 @@
   <div class="wrap">
     <h2><span data-l="tr">Fiyat</span><span data-l="en">Pricing</span></h2>
     <p class="intro">
-      <span data-l="tr">Tellal yazılımın ücretini alır; mesaj ücretlerini Meta doğrudan senden alır. Türkiye'deki numaralara pazarlama mesajı yaklaşık 1 sent.</span>
-      <span data-l="en">Tellal charges for the software. Meta bills message fees to you directly. Marketing messages to Turkish numbers cost about one US cent each.</span>
+      <span data-l="tr">Tellal yalnızca yazılımın ücretini alır. SMS ücretini sağlayıcın, WhatsApp mesaj ücretini Meta doğrudan senden alır.</span>
+      <span data-l="en">Tellal charges only for the software. Your SMS provider bills SMS, and Meta bills WhatsApp messages, directly to you.</span>
     </p>
     <div class="plans">
       <div class="plan">
@@ -160,7 +166,7 @@
         <div class="price">$0</div>
         <ul>
           <li><span data-l="tr">Günde 25 mesaj</span><span data-l="en">25 messages a day</span></li>
-          <li><span data-l="tr">Tüm şablon türleri, görsel ve belge</span><span data-l="en">All template types, images and documents</span></li>
+          <li><span data-l="tr">SMS ve WhatsApp, tüm özellikler</span><span data-l="en">SMS and WhatsApp, every feature</span></li>
           <li><span data-l="tr">Önizleme ve deneme gönderimi</span><span data-l="en">Preview and test sends</span></li>
         </ul>
         <a class="btn plain" data-install href="#"><span data-l="tr">Ücretsiz başla</span><span data-l="en">Start free</span></a>
@@ -189,7 +195,7 @@
     <h2><span data-l="tr">Sık sorulanlar</span><span data-l="en">Questions</span></h2>
     <details>
       <summary><span data-l="tr">Neye ihtiyacım var?</span><span data-l="en">What do I need?</span></summary>
-      <p><span data-l="tr">Bir Facebook hesabı ve WhatsApp'ta henüz kullanılmayan ya da WhatsApp Business uygulamasından taşınabilecek bir telefon numarası. Kurulum penceresi işletme hesabını senin için açar.</span><span data-l="en">A Facebook account and a phone number that isn't already on WhatsApp, or one you can move from the WhatsApp Business app. The setup window creates the business account for you.</span></p>
+      <p><span data-l="tr">SMS için onaylı başlığı olan bir Netgsm ya da İleti Merkezi hesabı. WhatsApp için WhatsApp Business Platform (Cloud API) hesabı, kalıcı erişim anahtarı ve onaylı bir şablon. İkisi de kurulum rehberinde adım adım var.</span><span data-l="en">For SMS, a Netgsm or İleti Merkezi account with an approved sender name. For WhatsApp, a WhatsApp Business Platform (Cloud API) account, a permanent access token and an approved template. The setup guide covers both step by step.</span></p>
     </details>
     <details>
       <summary><span data-l="tr">Şablon nedir, neden gerekli?</span><span data-l="en">What is a template and why do I need one?</span></summary>
@@ -197,11 +203,11 @@
     </details>
     <details>
       <summary><span data-l="tr">Verilerim nereye gidiyor?</span><span data-l="en">Where does my data go?</span></summary>
-      <p><span data-l="tr">Tablon Google'da kalır. Tellal yalnızca açık olan tabloyu okur ve mesajları doğrudan Meta'ya gönderir. Kişilerini ya da mesajlarını kendi sunucumuzda tutmayız. Ayrıntılar gizlilik politikasında.</span><span data-l="en">Your sheet stays in Google. Tellal reads only the open spreadsheet and sends messages straight to Meta. We don't keep your contacts or messages on our servers. Details are in the privacy policy.</span></p>
+      <p><span data-l="tr">Tablon Google'da kalır. Tellal yalnızca açık olan tabloyu okur ve mesajları doğrudan sağlayıcına (Netgsm, İleti Merkezi ya da Meta) gönderir. Kişilerini ya da mesajlarını kendi sunucumuzda tutmayız. Ayrıntılar gizlilik politikasında.</span><span data-l="en">Your sheet stays in Google. Tellal reads only the open spreadsheet and sends messages straight to your provider (Netgsm, İleti Merkezi or Meta). We don't keep your contacts or messages on our servers. Details are in the privacy policy.</span></p>
     </details>
     <details>
       <summary><span data-l="tr">Toplu reklam mesajı atabilir miyim?</span><span data-l="en">Can I send bulk promotions?</span></summary>
-      <p><span data-l="tr">Yalnızca sana mesaj almak için izin vermiş kişilere. WhatsApp kuralları bunu ister; izinsiz gönderim numaranın kalitesini düşürür. Türkiye'de ticari elektronik ileti için İYS kaydı da gerekir.</span><span data-l="en">Only to people who agreed to receive messages from you. WhatsApp's rules require it, and messaging people without consent lowers your number's quality rating.</span></p>
+      <p><span data-l="tr">Yalnızca sana mesaj almak için izin vermiş kişilere. WhatsApp kuralları bunu ister; izinsiz gönderim numaranın kalitesini düşürür. Türkiye'de ticari ileti için İYS kaydı da gerekir: ticari SMS'te mesaj türünü "Ticari" seç, sağlayıcın İYS'de izni olmayanlara göndermez.</span><span data-l="en">Only to people who agreed to receive messages from you. WhatsApp's rules require it, and messaging people without consent lowers your number's quality rating.</span></p>
     </details>
     <details>
       <summary><span data-l="tr">İptal edebilir miyim?</span><span data-l="en">Can I cancel?</span></summary>

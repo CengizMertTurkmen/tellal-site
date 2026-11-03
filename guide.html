@@ -14,80 +14,100 @@
 
 <div data-l="tr">
 <h1>Kurulum rehberi</h1>
-<p class="updated">Toplam süre: ilk seferde yaklaşık 15 dakika.</p>
+<p class="updated">SMS için 5 dakika, WhatsApp için ilk seferde yaklaşık 20 dakika.</p>
 
 <h2>1. Eklentiyi aç</h2>
-<p>Tabloda <b>Uzantılar › Tellal › Tellal'ı aç</b>. Tablonun ilk satırı başlık olmalı (ör. <code>Ad</code>, <code>Telefon</code>, <code>Sipariş</code>). Telefonlar <code>0532…</code>, <code>532…</code> ya da <code>+90 532…</code> biçiminde olabilir; Tellal düzeltir.</p>
+<p>Tabloda <b>Uzantılar › Tellal › Tellal'ı aç</b>. Tablonun ilk satırı başlık olmalı (ör. <code>Ad</code>, <code>Telefon</code>, <code>Sipariş</code>). Telefonlar <code>0532…</code>, <code>532…</code> ya da <code>+90 532…</code> biçiminde olabilir; Tellal düzeltir. Panelin üstünden <b>SMS</b> ya da <b>WhatsApp</b> sekmesini seç.</p>
 
-<h2>2. Numaranı bağla (önerilen yol)</h2>
+<h2>2a. SMS: hesabını bağla</h2>
+<p>Onaylı bir gönderici adın (başlık) olan bir Netgsm ya da İleti Merkezi hesabı gerekir. SMS ücretini sağlayıcın almaya devam eder.</p>
+<p><b>Netgsm</b></p>
 <ol class="steps-doc">
-  <li>Panelde <b>Facebook ile bağlan</b>'a tıkla.</li>
-  <li>Açılan Meta penceresinde işletmeni seç ya da oluştur, sonra WhatsApp numaranı ekle ve SMS ile doğrula.</li>
-  <li>Pencere "Bağlandı" deyip kapanınca panelde numaran görünür.</li>
-  <li>WhatsApp Manager'da <b>Ödeme yöntemi</b> ekle. Meta mesaj ücretlerini buradan alır.</li>
+  <li>Netgsm paneline gir, sağ üstten <b>Ayarlar › API İşlemleri</b>'ni aç.</li>
+  <li>API erişimini aç ve bir API şifresi belirle (ayrı bir alt kullanıcı açman daha güvenli).</li>
+  <li><b>IP kısıtı koyma.</b> Tellal Google'ın sunucularından çalışır, onların IP adresi sabit değildir.</li>
+  <li>Panelde sağlayıcı olarak Netgsm'i seç; kullanıcı adına 850 ile başlayan abone numaranı, şifreye API şifreni yaz, <b>Bağlan</b>.</li>
 </ol>
-<p>Not: Numara aynı anda WhatsApp telefon uygulamasında kullanılıyorsa önce uygulamadan silinmesi gerekir. WhatsApp Business uygulamasındaki bir numarayı sohbetleri koruyarak taşımak için Meta'nın "coexistence" seçeneği kurulum penceresinde çıkar.</p>
-
-<h2>3. Şablon oluştur</h2>
+<p><b>İleti Merkezi</b></p>
 <ol class="steps-doc">
-  <li><a href="https://business.facebook.com/wa/manage/message-templates/">WhatsApp Manager › Mesaj şablonları</a> › <b>Şablon oluştur</b>.</li>
-  <li>Kategori: sipariş, randevu, hatırlatma için <b>Yardımcı (Utility)</b>; kampanya için <b>Pazarlama (Marketing)</b>.</li>
-  <li>Metne değişken eklemek için <code>{{1}}</code>, <code>{{2}}</code> yaz. Örnek: <code>Merhaba {{1}}, {{2}} numaralı siparişin kargoya verildi.</code></li>
-  <li>Gönder. Onay çoğunlukla dakikalar sürer. Panelde ↻ ile listeyi yenile.</li>
+  <li>Panelde <b>Ayarlar › Güvenlik › Erişim İzinleri</b>'nden API erişimine izin ver.</li>
+  <li><b>Ayarlar › Güvenlik › API Erişimi</b>'nden <b>key</b> ve <b>hash</b> değerlerini kopyala. Sabit IP ayarını açma.</li>
+  <li>Türkçe karakterlerin bozulmaması için <b>Ayarlar › SMS › Karakter kodlaması</b>'nda Türkçe desteğini aç.</li>
+  <li>Panelde İleti Merkezi'ni seç, key ve hash'i yapıştır, <b>Bağlan</b>.</li>
+</ol>
+<p>Bağlanınca onaylı başlıkların listelenir. Liste boşsa başlık onayın henüz tamamlanmamıştır.</p>
+
+<h2>3a. SMS: mesajı yaz</h2>
+<ol class="steps-doc">
+  <li><b>Gönderici adı</b>nı seç.</li>
+  <li><b>Mesaj türü</b>: sipariş, randevu, ödeme gibi bilgilendirmeler için <b>Bilgilendirme</b>. Kampanya ve indirim duyuruları için <b>Ticari</b> (bireysel ya da tacir); sağlayıcın İYS'de izni olmayan numaralara göndermez.</li>
+  <li>Metni yaz; <b>+ Sütun ekle</b> ile <code>{{Ad}}</code>, <code>{{Sipariş}}</code> gibi alanları ekle. Sayaç karakter ve SMS sayısını gösterir. Türkçe karakter bir SMS'e sığan karakteri 160'tan 155'e düşürür.</li>
 </ol>
 
-<h2>4. Eşle, dene, gönder</h2>
-<p>Şablonu seç, her değişken için bir sütun ya da sabit metin seç. Önizlemeyi kontrol et, <b>Önce kendime deneme gönder</b> ile kendine at, sonra <b>Gönderimi başlat</b>. Sonuçlar <code>Tellal Status</code> sütununa yazılır; gönderilen satırlar bir sonraki seferde atlanır.</p>
-
-<h2>Elle bağlanma (ileri düzey)</h2>
-<p>Kendi Meta uygulamanı kullanmak istersen panelde <b>Token ile elle bağlan</b>'ı aç:</p>
+<h2>2b. WhatsApp: numaranı bağla</h2>
+<p>WhatsApp Business Platform (Cloud API) hesabı, kalıcı bir erişim anahtarı ve onaylı bir mesaj şablonu gerekir.</p>
 <ol class="steps-doc">
   <li><a href="https://developers.facebook.com/apps/">developers.facebook.com</a> › Uygulama oluştur › tür: <b>Business</b> › WhatsApp ürününü ekle.</li>
   <li>WhatsApp › API Kurulumu: numaranı ekle. Buradaki <b>Telefon numarası ID</b> ve <b>WhatsApp Business hesap ID</b> değerlerini kopyala.</li>
   <li>İşletme ayarları › Kullanıcılar › <b>Sistem kullanıcıları</b> › yönetici ekle › Varlık ata: uygulama ve WhatsApp hesabı (tam yetki).</li>
   <li><b>Token oluştur</b>: izinler <code>whatsapp_business_messaging</code> ve <code>whatsapp_business_management</code>, süre: <b>Hiçbir zaman</b>.</li>
+  <li>WhatsApp Manager'da <b>Ödeme yöntemi</b> ekle; Meta mesaj ücretlerini buradan alır.</li>
   <li>Üç değeri panele yapıştır, <b>Bağlan</b>.</li>
 </ol>
 
+<h2>3b. WhatsApp: şablon oluştur ve eşle</h2>
+<ol class="steps-doc">
+  <li><a href="https://business.facebook.com/wa/manage/message-templates/">WhatsApp Manager › Mesaj şablonları</a> › <b>Şablon oluştur</b>.</li>
+  <li>Kategori: sipariş, randevu, hatırlatma için <b>Yardımcı (Utility)</b>; kampanya için <b>Pazarlama (Marketing)</b>.</li>
+  <li>Değişken için <code>{{1}}</code>, <code>{{2}}</code> yaz. Örnek: <code>Merhaba {{1}}, {{2}} numaralı siparişin kargoya verildi.</code> Onay çoğunlukla dakikalar sürer.</li>
+  <li>Panelde ↻ ile listeyi yenile, şablonu seç, her değişken için bir sütun ya da sabit metin seç.</li>
+</ol>
+
+<h2>4. Dene ve gönder</h2>
+<p>Önizlemeyi kontrol et, <b>Önce kendime deneme gönder</b> ile kendine at, sonra <b>Gönderimi başlat</b>. Sonuçlar <code>Tellal Status</code> sütununa yazılır; gönderilen satırlar bir sonraki seferde atlanır.</p>
+
 <h2>Sık görülen hatalar</h2>
 <ul>
-  <li><b>Şablon bu dilde yok:</b> Şablonun dili (ör. <code>tr</code>) ile seçilen aynı olmalı; listeyi yenile.</li>
-  <li><b>Mesaj iletilemedi:</b> Numara WhatsApp kullanmıyor olabilir ya da Meta kişi başı pazarlama sınırına takılmıştır.</li>
-  <li><b>Ödeme sorunu:</b> WhatsApp Manager'da ödeme yöntemi yok.</li>
-  <li><b>Erişim anahtarı geçersiz:</b> Bağlantıyı kaldırıp yeniden bağlan.</li>
+  <li><b>Netgsm kullanıcı adı/şifre hatalı ya da API erişimi kapalı:</b> API İşlemleri'nde erişimin açık ve IP kısıtının kapalı olduğunu kontrol et.</li>
+  <li><b>Gönderici adı tanımlı değil:</b> Seçtiğin başlık hesabında onaylı değil; ↻ ile listeyi yenile.</li>
+  <li><b>Türkiye cep numarası değil:</b> SMS yalnızca 05XX ile başlayan Türkiye cep numaralarına gider.</li>
+  <li><b>Hesaba bağlı İYS markası bulunamadı:</b> Ticari gönderim için sağlayıcında İYS marka kodunu tanımla ya da mesaj türünü Bilgilendirme yap.</li>
+  <li><b>WhatsApp şablonu bu dilde yok:</b> Şablonun dili (ör. <code>tr</code>) ile seçilen aynı olmalı; listeyi yenile.</li>
+  <li><b>WhatsApp erişim anahtarı geçersiz:</b> Bağlantıyı kaldırıp yeni token ile yeniden bağlan.</li>
 </ul>
 <p>Takıldığın yer olursa yaz: <a data-support href="#"></a></p>
 </div>
 
 <div data-l="en">
 <h1>Setup guide</h1>
-<p class="updated">About 15 minutes the first time.</p>
+<p class="updated">About 5 minutes for SMS, about 20 minutes the first time for WhatsApp.</p>
 <h2>1. Open the add-on</h2>
-<p>In your sheet choose <b>Extensions › Tellal › Open Tellal</b>. Row 1 must hold column names (for example <code>Name</code>, <code>Phone</code>, <code>Order</code>). Phone numbers should include the country code, or set the default country code in the sidebar.</p>
-<h2>2. Connect your number (recommended)</h2>
+<p>In your sheet choose <b>Extensions › Tellal › Open Tellal</b>. Row 1 must hold column names (for example <code>Name</code>, <code>Phone</code>, <code>Order</code>). Pick the <b>SMS</b> or <b>WhatsApp</b> tab at the top of the sidebar.</p>
+<h2>2a. SMS: connect your account</h2>
+<p>You need a Netgsm or İleti Merkezi account with an approved sender name. Your provider keeps billing SMS as before. SMS goes to Turkish mobile numbers.</p>
 <ol class="steps-doc">
-  <li>Click <b>Connect with Facebook</b> in the sidebar.</li>
-  <li>In Meta's window, pick or create your business, add your WhatsApp number and verify it by SMS.</li>
-  <li>When the window says "Connected" and closes, your number appears in the sidebar.</li>
-  <li>Add a <b>payment method</b> in WhatsApp Manager. Meta bills message fees there.</li>
+  <li><b>Netgsm:</b> in the panel open <b>Settings › API</b>, turn on API access and set an API password. Don't set an IP restriction: Tellal runs on Google's servers, whose IPs change. Enter your subscriber number (starts with 850) and the API password.</li>
+  <li><b>İleti Merkezi:</b> allow API access under <b>Settings › Security</b>, copy the <b>key</b> and <b>hash</b> from <b>API Access</b>, and turn on Turkish character encoding under <b>Settings › SMS</b>. Don't enable static IP.</li>
 </ol>
-<h2>3. Create a template</h2>
-<ol class="steps-doc">
-  <li><a href="https://business.facebook.com/wa/manage/message-templates/">WhatsApp Manager › Message templates</a> › <b>Create template</b>.</li>
-  <li>Category: <b>Utility</b> for orders, bookings and reminders; <b>Marketing</b> for promotions.</li>
-  <li>Add variables with <code>{{1}}</code>, <code>{{2}}</code>. Example: <code>Hi {{1}}, your order {{2}} has shipped.</code></li>
-  <li>Submit. Approval usually takes minutes. Refresh the list in the sidebar with ↻.</li>
-</ol>
-<h2>4. Map, test, send</h2>
-<p>Pick the template and a column or fixed text for each variable. Check the preview, use <b>Send a test to myself first</b>, then <b>Start sending</b>. Results go into the <code>Tellal Status</code> column, and sent rows are skipped next time.</p>
-<h2>Manual connection (advanced)</h2>
+<h2>3a. SMS: write the message</h2>
+<p>Pick the sender name and the message type (informational, or commercial for individuals or merchants, which your provider checks against İYS). Write the text and use <b>+ Insert column</b> to add fields like <code>{{Name}}</code>. The counter shows characters and SMS parts.</p>
+<h2>2b. WhatsApp: connect your number</h2>
 <ol class="steps-doc">
   <li><a href="https://developers.facebook.com/apps/">developers.facebook.com</a> › Create app › type <b>Business</b> › add WhatsApp.</li>
   <li>WhatsApp › API Setup: add your number and copy the <b>Phone number ID</b> and <b>WhatsApp Business Account ID</b>.</li>
   <li>Business settings › Users › <b>System users</b> › add an admin › assign the app and the WhatsApp account with full control.</li>
   <li><b>Generate token</b> with <code>whatsapp_business_messaging</code> and <code>whatsapp_business_management</code>, expiry <b>Never</b>.</li>
+  <li>Add a <b>payment method</b> in WhatsApp Manager; Meta bills message fees there.</li>
   <li>Paste the three values into the sidebar and click <b>Connect</b>.</li>
 </ol>
+<h2>3b. WhatsApp: create and map a template</h2>
+<ol class="steps-doc">
+  <li><a href="https://business.facebook.com/wa/manage/message-templates/">WhatsApp Manager › Message templates</a> › <b>Create template</b>. Use <b>Utility</b> for orders, bookings and reminders; <b>Marketing</b> for promotions.</li>
+  <li>Add variables with <code>{{1}}</code>, <code>{{2}}</code>. Approval usually takes minutes.</li>
+  <li>Refresh the list in the sidebar with ↻, pick the template and a column or fixed text for each variable.</li>
+</ol>
+<h2>4. Test and send</h2>
+<p>Check the preview, use <b>Send a test to myself first</b>, then <b>Start sending</b>. Results go into the <code>Tellal Status</code> column, and sent rows are skipped next time.</p>
 <p>Stuck? Email <a data-support href="#"></a></p>
 </div>
 </main>
