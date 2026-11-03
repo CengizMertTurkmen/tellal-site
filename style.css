@@ -127,7 +127,11 @@ footer.site a { color: var(--muted); margin-right: 16px; }
 }
 @media (max-width: 520px) {
   .wrap { padding: 0 16px; }
+  .sheet { overflow-x: auto; }
   .sheet th:nth-child(4), .sheet td:nth-child(4) { display: none; }
+  .sheet table { font-size: 12.5px; }
+  .sheet th, .sheet td { padding: 7px 6px; }
+  .sheet .st { min-width: 0; }
   .hero { padding-top: 40px; }
 }
 @media (prefers-reduced-motion: reduce) {
