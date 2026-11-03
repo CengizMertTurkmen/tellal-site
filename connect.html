@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Connect WhatsApp to Tellal</title>
+<link rel="icon" href="logo.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  .doc { max-width: 560px; }
+  #status { margin-top: 20px; padding: 12px 14px; border-radius: 8px; display: none; }
+  #status.show { display: block; }
+  #status.ok { background: var(--teal-soft); color: var(--teal); }
+  #status.bad { background: var(--coral-soft); color: var(--coral); }
+  #status.wait { background: var(--header); color: var(--muted); }
+  #manual { display: none; margin-top: 16px; }
+  #manual label { display: block; font-size: 14px; color: var(--muted); margin-top: 10px; }
+  #manual input { width: 100%; font: inherit; font-size: 14px; padding: 8px; border: 1px solid var(--grid); border-radius: 6px; }
+</style>
+</head>
+<body data-lang="tr">
+<main class="doc">
+  <a class="brand" href="./" target="_blank"><img src="logo.svg" alt="" width="28" height="28"> Tellal</a>
+  <div data-l="tr">
+    <h1 style="margin-top:24px">WhatsApp numaranı bağla</h1>
+    <p>Meta'nın resmi kurulum penceresi açılacak. İşletmeni ve numaranı seç, SMS koduyla doğrula. Bitince bu pencere kendiliğinden kapanır.</p>
+  </div>
+  <div data-l="en">
+    <h1 style="margin-top:24px">Connect your WhatsApp number</h1>
+    <p>Meta's official setup window will open. Pick your business and number and verify it with the SMS code. This window closes by itself when you're done.</p>
+  </div>
+  <button class="btn primary" id="go" disabled><span data-l="tr">Facebook ile devam et</span><span data-l="en">Continue with Facebook</span></button>
+  <div id="status" role="status"></div>
+  <div id="manual">
+    <p data-l="tr">Kenar paneline otomatik aktaramadık. Panelde "Token ile elle bağlan"ı açıp bu üç değeri yapıştır:</p>
+    <p data-l="en">We couldn't pass this to the sidebar automatically. Open "Connect manually with a token" in the sidebar and paste these three values:</p>
+    <label>Token</label><input id="mToken" readonly>
+    <label>Phone number ID</label><input id="mPhone" readonly>
+    <label>WABA ID</label><input id="mWaba" readonly>
+  </div>
+</main>
+<script src="site.js"></script>
+<script>
+(function () {
+  var lang = document.body.getAttribute('data-lang');
+  var M = {
+    tr: { wait: 'Meta penceresinde kurulumu tamamla…', saving: 'Numara bağlanıyor…', ok: 'Bağlandı. Bu pencereyi kapatabilirsin.', cancel: 'Kurulum yarıda kaldı. Tekrar denemek için düğmeye bas.', notReady: 'Bağlantı servisi henüz yapılandırılmadı. Şimdilik kenar panelinden token ile elle bağlan.', pin: 'İki adımlı doğrulama PIN\'in: {pin}. Bir yere not et.' },
+    en: { wait: 'Finish the setup in Meta\'s window…', saving: 'Connecting your number…', ok: 'Connected. You can close this window.', cancel: 'Setup was not finished. Press the button to try again.', notReady: 'The connect service isn\'t configured yet. For now, connect manually with a token in the sidebar.', pin: 'Your two-step verification PIN: {pin}. Keep it somewhere safe.' }
+  }[lang];
+  var box = document.getElementById('status');
+  function show(kind, text) { box.className = 'show ' + kind; box.textContent = text; }
+
+  // The sidebar tells us its origin; only Apps Script sandbox origins are accepted.
+  var hash = new URLSearchParams(location.hash.slice(1));
+  var target = hash.get('origin') || '';
+  if (!/^https:\/\/[a-z0-9-]+\.googleusercontent\.com$/.test(target)) target = null;
+
+  var session = {};
+  window.addEventListener('message', function (ev) {
+    if (!/(^|\.)facebook\.com$/.test(new URL(ev.origin).hostname)) {
+      if (ev.origin === target && ev.data && ev.data.type === 'tellal-es-ok') { show('ok', M.ok); setTimeout(function () { window.close(); }, 1500); }
+      return;
+    }
+    try {
+      var d = typeof ev.data === 'string' ? JSON.parse(ev.data) : ev.data;
+      if (d.type === 'WA_EMBEDDED_SIGNUP') {
+        if (d.event === 'CANCEL') show('bad', M.cancel);
+        else if (d.data) { session.wabaId = d.data.waba_id; session.phoneNumberId = d.data.phone_number_id; }
+      }
+    } catch (e) {}
+  });
+
+  function deliver(result) {
+    if (window.opener && target) {
+      window.opener.postMessage({ type: 'tellal-es', token: result.token, phoneNumberId: result.phoneNumberId, wabaId: result.wabaId }, target);
+      show('wait', M.saving);
+      setTimeout(function () { if (box.className.indexOf('ok') < 0) fallback(result); }, 8000);
+    } else {
+      fallback(result);
+    }
+    if (result.pin) {
+      var p = document.createElement('p');
+      p.textContent = M.pin.replace('{pin}', result.pin);
+      document.querySelector('main').appendChild(p);
+    }
+  }
+  function fallback(result) {
+    document.getElementById('mToken').value = result.token;
+    document.getElementById('mPhone').value = result.phoneNumberId;
+    document.getElementById('mWaba').value = result.wabaId;
+    document.getElementById('manual').style.display = 'block';
+    box.className = '';
+  }
+
+  fetch(TELLAL.apiBase).then(function (r) { return r.json(); }).then(function (cfg) {
+    if (!cfg.appId || !cfg.configId) { show('bad', M.notReady); return; }
+    window.fbAsyncInit = function () {
+      FB.init({ appId: cfg.appId, autoLogAppEvents: true, xfbml: false, version: cfg.graphVersion });
+      var btn = document.getElementById('go');
+      btn.disabled = false;
+      btn.addEventListener('click', function () {
+        show('wait', M.wait);
+        FB.login(function (res) {
+          var code = res && res.authResponse && res.authResponse.code;
+          if (!code) { show('bad', M.cancel); return; }
+          // Session info arrives by postMessage, sometimes just after the login callback.
+          setTimeout(function () {
+            show('wait', M.saving);
+            fetch(TELLAL.apiBase, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ code: code, wabaId: session.wabaId, phoneNumberId: session.phoneNumberId })
+            }).then(function (r) { return r.json().then(function (j) { return { ok: r.ok, body: j }; }); })
+              .then(function (r) { if (!r.ok) throw new Error(r.body.error || 'error'); deliver(r.body); })
+              .catch(function (e) { show('bad', e.message); });
+          }, 800);
+        }, {
+          config_id: cfg.configId,
+          response_type: 'code',
+          override_default_response_type: true,
+          extras: { setup: {}, featureType: '', sessionInfoVersion: '3' }
+        });
+      });
+    };
+    var s = document.createElement('script');
+    s.async = true; s.defer = true; s.crossOrigin = 'anonymous';
+    s.src = 'https://connect.facebook.net/' + (lang === 'tr' ? 'tr_TR' : 'en_US') + '/sdk.js';
+    document.body.appendChild(s);
+  }).catch(function () { show('bad', M.notReady); });
+})();
+</script>
+</body>
+</html>

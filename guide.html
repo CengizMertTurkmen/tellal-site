@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tellal setup guide</title>
+<link rel="icon" href="logo.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-lang="tr">
+<header class="top"><div class="wrap"><a class="brand" href="./"><img src="logo.svg" alt="" width="28" height="28"> Tellal</a><nav><span class="langs"><button data-set="tr" aria-pressed="false">TR</button> <button data-set="en" aria-pressed="false">EN</button></span></nav></div></header>
+<main class="doc">
+
+<div data-l="tr">
+<h1>Kurulum rehberi</h1>
+<p class="updated">Toplam süre: ilk seferde yaklaşık 15 dakika.</p>
+
+<h2>1. Eklentiyi aç</h2>
+<p>Tabloda <b>Uzantılar › Tellal › Tellal'ı aç</b>. Tablonun ilk satırı başlık olmalı (ör. <code>Ad</code>, <code>Telefon</code>, <code>Sipariş</code>). Telefonlar <code>0532…</code>, <code>532…</code> ya da <code>+90 532…</code> biçiminde olabilir; Tellal düzeltir.</p>
+
+<h2>2. Numaranı bağla (önerilen yol)</h2>
+<ol class="steps-doc">
+  <li>Panelde <b>Facebook ile bağlan</b>'a tıkla.</li>
+  <li>Açılan Meta penceresinde işletmeni seç ya da oluştur, sonra WhatsApp numaranı ekle ve SMS ile doğrula.</li>
+  <li>Pencere "Bağlandı" deyip kapanınca panelde numaran görünür.</li>
+  <li>WhatsApp Manager'da <b>Ödeme yöntemi</b> ekle. Meta mesaj ücretlerini buradan alır.</li>
+</ol>
+<p>Not: Numara aynı anda WhatsApp telefon uygulamasında kullanılıyorsa önce uygulamadan silinmesi gerekir. WhatsApp Business uygulamasındaki bir numarayı sohbetleri koruyarak taşımak için Meta'nın "coexistence" seçeneği kurulum penceresinde çıkar.</p>
+
+<h2>3. Şablon oluştur</h2>
+<ol class="steps-doc">
+  <li><a href="https://business.facebook.com/wa/manage/message-templates/">WhatsApp Manager › Mesaj şablonları</a> › <b>Şablon oluştur</b>.</li>
+  <li>Kategori: sipariş, randevu, hatırlatma için <b>Yardımcı (Utility)</b>; kampanya için <b>Pazarlama (Marketing)</b>.</li>
+  <li>Metne değişken eklemek için <code>{{1}}</code>, <code>{{2}}</code> yaz. Örnek: <code>Merhaba {{1}}, {{2}} numaralı siparişin kargoya verildi.</code></li>
+  <li>Gönder. Onay çoğunlukla dakikalar sürer. Panelde ↻ ile listeyi yenile.</li>
+</ol>
+
+<h2>4. Eşle, dene, gönder</h2>
+<p>Şablonu seç, her değişken için bir sütun ya da sabit metin seç. Önizlemeyi kontrol et, <b>Önce kendime deneme gönder</b> ile kendine at, sonra <b>Gönderimi başlat</b>. Sonuçlar <code>Tellal Status</code> sütununa yazılır; gönderilen satırlar bir sonraki seferde atlanır.</p>
+
+<h2>Elle bağlanma (ileri düzey)</h2>
+<p>Kendi Meta uygulamanı kullanmak istersen panelde <b>Token ile elle bağlan</b>'ı aç:</p>
+<ol class="steps-doc">
+  <li><a href="https://developers.facebook.com/apps/">developers.facebook.com</a> › Uygulama oluştur › tür: <b>Business</b> › WhatsApp ürününü ekle.</li>
+  <li>WhatsApp › API Kurulumu: numaranı ekle. Buradaki <b>Telefon numarası ID</b> ve <b>WhatsApp Business hesap ID</b> değerlerini kopyala.</li>
+  <li>İşletme ayarları › Kullanıcılar › <b>Sistem kullanıcıları</b> › yönetici ekle › Varlık ata: uygulama ve WhatsApp hesabı (tam yetki).</li>
+  <li><b>Token oluştur</b>: izinler <code>whatsapp_business_messaging</code> ve <code>whatsapp_business_management</code>, süre: <b>Hiçbir zaman</b>.</li>
+  <li>Üç değeri panele yapıştır, <b>Bağlan</b>.</li>
+</ol>
+
+<h2>Sık görülen hatalar</h2>
+<ul>
+  <li><b>Şablon bu dilde yok:</b> Şablonun dili (ör. <code>tr</code>) ile seçilen aynı olmalı; listeyi yenile.</li>
+  <li><b>Mesaj iletilemedi:</b> Numara WhatsApp kullanmıyor olabilir ya da Meta kişi başı pazarlama sınırına takılmıştır.</li>
+  <li><b>Ödeme sorunu:</b> WhatsApp Manager'da ödeme yöntemi yok.</li>
+  <li><b>Erişim anahtarı geçersiz:</b> Bağlantıyı kaldırıp yeniden bağlan.</li>
+</ul>
+<p>Takıldığın yer olursa yaz: <a data-support href="#"></a></p>
+</div>
+
+<div data-l="en">
+<h1>Setup guide</h1>
+<p class="updated">About 15 minutes the first time.</p>
+<h2>1. Open the add-on</h2>
+<p>In your sheet choose <b>Extensions › Tellal › Open Tellal</b>. Row 1 must hold column names (for example <code>Name</code>, <code>Phone</code>, <code>Order</code>). Phone numbers should include the country code, or set the default country code in the sidebar.</p>
+<h2>2. Connect your number (recommended)</h2>
+<ol class="steps-doc">
+  <li>Click <b>Connect with Facebook</b> in the sidebar.</li>
+  <li>In Meta's window, pick or create your business, add your WhatsApp number and verify it by SMS.</li>
+  <li>When the window says "Connected" and closes, your number appears in the sidebar.</li>
+  <li>Add a <b>payment method</b> in WhatsApp Manager. Meta bills message fees there.</li>
+</ol>
+<h2>3. Create a template</h2>
+<ol class="steps-doc">
+  <li><a href="https://business.facebook.com/wa/manage/message-templates/">WhatsApp Manager › Message templates</a> › <b>Create template</b>.</li>
+  <li>Category: <b>Utility</b> for orders, bookings and reminders; <b>Marketing</b> for promotions.</li>
+  <li>Add variables with <code>{{1}}</code>, <code>{{2}}</code>. Example: <code>Hi {{1}}, your order {{2}} has shipped.</code></li>
+  <li>Submit. Approval usually takes minutes. Refresh the list in the sidebar with ↻.</li>
+</ol>
+<h2>4. Map, test, send</h2>
+<p>Pick the template and a column or fixed text for each variable. Check the preview, use <b>Send a test to myself first</b>, then <b>Start sending</b>. Results go into the <code>Tellal Status</code> column, and sent rows are skipped next time.</p>
+<h2>Manual connection (advanced)</h2>
+<ol class="steps-doc">
+  <li><a href="https://developers.facebook.com/apps/">developers.facebook.com</a> › Create app › type <b>Business</b> › add WhatsApp.</li>
+  <li>WhatsApp › API Setup: add your number and copy the <b>Phone number ID</b> and <b>WhatsApp Business Account ID</b>.</li>
+  <li>Business settings › Users › <b>System users</b> › add an admin › assign the app and the WhatsApp account with full control.</li>
+  <li><b>Generate token</b> with <code>whatsapp_business_messaging</code> and <code>whatsapp_business_management</code>, expiry <b>Never</b>.</li>
+  <li>Paste the three values into the sidebar and click <b>Connect</b>.</li>
+</ol>
+<p>Stuck? Email <a data-support href="#"></a></p>
+</div>
+</main>
+<footer class="site"><div class="wrap"><div>© 2026 Tellal</div><div><a href="privacy">Privacy</a><a href="terms">Terms</a><a href="guide">Guide</a></div></div></footer>
+<script src="site.js"></script>
+</body>
+</html>
