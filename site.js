@@ -3,7 +3,7 @@ var TELLAL = {
   installUrl: 'https://workspace.google.com/marketplace',
   checkoutMonthly: '',
   checkoutYearly: '',
-  supportEmail: 'support@gettellal.com',
+  supportEmail: 'CodEven@codeven.io',
   apiBase: 'https://dbygawmnmbvckigvsorw.supabase.co/functions/v1/es-exchange'
 };
 
