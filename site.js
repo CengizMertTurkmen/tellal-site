@@ -1,6 +1,7 @@
 // Fill these in after the Marketplace listing and Lemon Squeezy products exist (see LAUNCH.md).
 var TELLAL = {
-  installUrl: 'https://workspace.google.com/marketplace',
+  // Google review: no Marketplace links until the listing is approved. Swap in the listing URL then.
+  installUrl: 'guide.html',
   checkoutMonthly: 'https://codeven.lemonsqueezy.com/checkout/buy/8929fc56-71c6-46b0-87cf-92268fc65436',
   checkoutYearly: 'https://codeven.lemonsqueezy.com/checkout/buy/3ccf4bd9-63e9-4da5-9cdd-514d97dc816c',
   supportEmail: 'CodEven@codeven.io',
